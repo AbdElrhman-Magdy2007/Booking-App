@@ -180,12 +180,12 @@ const SearchForm = () => {
         initial="initial"
         animate="animate"
         custom={5}
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(245, 158, 11, 0.5)' }}
         whileTap={{ scale: 0.95 }}
       >
         <Button 
           type="submit" 
-          className="bg-secondary text-charcoal hover:bg-secondary/90 h-10 px-8 font-montserrat font-medium shadow-lg btn-hover-effect btn-secondary-hover"
+          className="bg-secondary text-slate hover:bg-secondary/90 h-10 px-8 font-poppins font-medium shadow-lg btn-hover-effect btn-secondary-hover"
         >
           <Search className="mr-2 h-4 w-4" />
           Search

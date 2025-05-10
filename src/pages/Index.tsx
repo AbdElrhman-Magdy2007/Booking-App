@@ -102,16 +102,33 @@ const Index = () => {
         <PopularDestinations />
         
         {/* Special Offers */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 relative overflow-hidden">
+          {/* Background vine patterns */}
+          <div className="absolute inset-0 pointer-events-none">
+            {Array(5).fill(0).map((_, i) => (
+              <div
+                key={i}
+                className="vine absolute"
+                style={{ 
+                  top: `${Math.random() * 80}%`,
+                  left: `${Math.random() * 90 + 5}%`,
+                  height: `${Math.random() * 30 + 20}%`,
+                  animationDelay: `${i * 0.3}s`,
+                  transform: `rotate(${Math.random() * 40 - 20}deg)`
+                }}
+              />
+            ))}
+          </div>
+          
           <div className="container mx-auto px-4">
             <ScrollReveal>
-              <h2 className="text-3xl font-bold text-center mb-2 font-montserrat text-charcoal">
+              <h2 className="text-3xl font-bold text-center mb-2 font-poppins text-slate">
                 Exclusive <span className="text-primary">Offers</span>
               </h2>
             </ScrollReveal>
             
             <ScrollReveal delay={0.1}>
-              <p className="text-gray-600 text-center mb-12 font-lato">
+              <p className="text-gray-600 text-center mb-12 font-inter">
                 Limited-time deals for your next adventure
               </p>
             </ScrollReveal>
@@ -124,28 +141,34 @@ const Index = () => {
                   delay={index * 0.2}
                   className="w-full"
                 >
-                  <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">
+                  <motion.div 
+                    className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full"
+                    whileHover={{ y: -5, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}
+                  >
                     <div className="md:w-2/5 h-64 md:h-auto overflow-hidden">
-                      <img 
+                      <motion.img 
                         src={offer.image} 
                         alt={offer.title} 
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-cover"
+                        initial={{ scale: 1 }}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.5 }}
                       />
                     </div>
                     <div className="md:w-3/5 p-6 flex flex-col justify-between">
                       <div>
-                        <h3 className="text-2xl font-bold mb-2 text-charcoal font-montserrat">{offer.title}</h3>
-                        <p className="text-gray-600 mb-4 font-lato">{offer.description}</p>
+                        <h3 className="text-2xl font-bold mb-2 text-slate font-poppins">{offer.title}</h3>
+                        <p className="text-gray-600 mb-4 font-inter">{offer.description}</p>
                       </div>
                       <Link to={offer.link}>
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                          <Button className="bg-secondary text-charcoal hover:bg-secondary/90 mt-4 btn-hover-effect btn-secondary-hover">
+                          <Button className="bg-secondary text-slate hover:bg-secondary/90 mt-4 btn-hover-effect btn-secondary-hover">
                             View Offer <ArrowRight className="ml-2 h-4 w-4" />
                           </Button>
                         </motion.div>
                       </Link>
                     </div>
-                  </div>
+                  </motion.div>
                 </ScrollReveal>
               ))}
             </div>
@@ -156,13 +179,13 @@ const Index = () => {
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <ScrollReveal>
-              <h2 className="text-3xl font-bold text-center mb-2 font-montserrat text-charcoal">
+              <h2 className="text-3xl font-bold text-center mb-2 font-poppins text-slate">
                 Featured <span className="text-primary">Hotels</span>
               </h2>
             </ScrollReveal>
             
             <ScrollReveal delay={0.1}>
-              <p className="text-gray-600 text-center mb-12 font-lato">
+              <p className="text-gray-600 text-center mb-12 font-inter">
                 Handpicked accommodations for your perfect stay
               </p>
             </ScrollReveal>
@@ -178,7 +201,7 @@ const Index = () => {
             <ScrollReveal delay={0.3} className="flex justify-center mt-12 w-full">
               <Link to="/search">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button className="bg-primary hover:bg-primary/90 px-8 shadow-md btn-hover-effect font-montserrat">
+                  <Button className="bg-primary hover:bg-primary/90 px-8 shadow-md btn-hover-effect font-poppins">
                     Explore All Hotels <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </motion.div>
@@ -191,13 +214,13 @@ const Index = () => {
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <ScrollReveal>
-              <h2 className="text-3xl font-bold text-center mb-2 font-montserrat text-charcoal">
+              <h2 className="text-3xl font-bold text-center mb-2 font-poppins text-slate">
                 Guest <span className="text-primary">Reviews</span>
               </h2>
             </ScrollReveal>
             
             <ScrollReveal delay={0.1}>
-              <p className="text-gray-600 text-center mb-12 font-lato">
+              <p className="text-gray-600 text-center mb-12 font-inter">
                 Authentic experiences from our satisfied travelers
               </p>
             </ScrollReveal>
@@ -205,13 +228,29 @@ const Index = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[1, 2, 3].map((index) => (
                 <ScrollReveal key={index} delay={index * 0.2} className="w-full">
-                  <div className="bg-white rounded-lg shadow-lg p-6 h-full transform transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
-                    <div className="flex items-center mb-4">
+                  <motion.div 
+                    className="bg-white rounded-lg shadow-lg p-6 h-full"
+                    whileHover={{ y: -5, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <motion.div 
+                      className="flex items-center mb-4"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5, staggerChildren: 0.1 }}
+                    >
                       {Array(5).fill(0).map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-secondary fill-secondary" />
+                        <motion.span
+                          key={i}
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: i * 0.1 }}
+                        >
+                          <Star key={i} className="w-5 h-5 text-secondary fill-secondary" />
+                        </motion.span>
                       ))}
-                    </div>
-                    <p className="text-gray-600 mb-6 font-lato italic">
+                    </motion.div>
+                    <p className="text-gray-600 mb-6 font-inter italic">
                       "The hotel exceeded all our expectations. From the moment we arrived, the staff was incredibly attentive and made our stay memorable. The amenities were top-notch and the location was perfect for exploring the city."
                     </p>
                     <div className="flex items-center">
@@ -223,18 +262,18 @@ const Index = () => {
                         />
                       </div>
                       <div>
-                        <p className="font-bold text-charcoal font-montserrat">
+                        <p className="font-bold text-slate font-poppins">
                           {index === 0 ? 'Michael Johnson' : index === 1 ? 'Sarah Wilson' : 'David Thompson'}
                         </p>
                         <div className="flex items-center text-sm text-gray-500">
                           <MapPin size={14} className="mr-1" />
-                          <span className="font-lato">
+                          <span className="font-inter">
                             {index === 0 ? 'New York, USA' : index === 1 ? 'London, UK' : 'Sydney, Australia'}
                           </span>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </ScrollReveal>
               ))}
             </div>
@@ -242,17 +281,20 @@ const Index = () => {
         </section>
         
         {/* Download App CTA */}
-        <section className="py-16 bg-charcoal text-white wave-bg">
+        <section className="py-16 bg-slate text-white wave-bg relative overflow-hidden">
+          {/* Animated wave */}
+          <div className="wave absolute bottom-0 left-0 w-full h-24"></div>
+          
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center justify-between">
               <ScrollReveal direction="left" className="md:w-1/2 mb-8 md:mb-0">
-                <h2 className="text-3xl font-bold mb-4 font-montserrat">Get Our Mobile App</h2>
-                <p className="text-white/80 mb-6 font-lato">
+                <h2 className="text-3xl font-bold mb-4 font-poppins">Get Our Mobile App</h2>
+                <p className="text-white/80 mb-6 font-inter">
                   Book on the go, receive exclusive app-only deals, and manage your trips with ease using our mobile application.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button variant="outline" className="border-white text-white hover:bg-white hover:text-charcoal btn-hover-effect">
+                    <Button variant="outline" className="border-white text-white hover:bg-white hover:text-slate btn-hover-effect">
                       <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none">
                         <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         <path d="M8 14L12 10L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -261,7 +303,7 @@ const Index = () => {
                     </Button>
                   </motion.div>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button variant="outline" className="border-white text-white hover:bg-white hover:text-charcoal btn-hover-effect">
+                    <Button variant="outline" className="border-white text-white hover:bg-white hover:text-slate btn-hover-effect">
                       <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none">
                         <path d="M12 2L2 12L12 22L22 12L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
@@ -271,22 +313,29 @@ const Index = () => {
                 </div>
               </ScrollReveal>
               <ScrollReveal direction="right" className="md:w-2/5">
-                <div className="bg-white/10 p-6 rounded-lg backdrop-blur-sm transform transition-transform hover:scale-105 duration-500">
+                <motion.div 
+                  className="bg-white/10 p-6 rounded-lg backdrop-blur-sm"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <div className="aspect-[9/16] rounded-lg bg-white/5 flex items-center justify-center overflow-hidden relative">
-                    <img 
+                    <motion.img 
                       src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
                       alt="App Screenshot" 
                       className="h-full w-full object-cover rounded-lg opacity-90"
+                      initial={{ scale: 1 }}
+                      whileHover={{ scale: 1.03 }}
+                      transition={{ duration: 0.5 }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-charcoal/50"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate/50"></div>
                     <div className="absolute bottom-4 left-4 right-4 bg-white/90 p-3 rounded-lg backdrop-blur-sm shadow-lg">
-                      <div className="text-charcoal text-sm font-montserrat">
+                      <div className="text-slate text-sm font-poppins">
                         <div className="font-bold mb-1">Booking confirmed!</div>
                         <div className="text-xs text-gray-600">Grand Luxury Resort & Spa - July 15-18</div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </ScrollReveal>
             </div>
           </div>

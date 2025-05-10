@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -16,11 +16,11 @@
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 27%;
 
-    --primary: 158 64% 39%;
+    --primary: 142 69% 45%; /* Vibrant green */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 42 96% 56%;
-    --secondary-foreground: 215 25% 27%;
+    --secondary: 35 96% 50%; /* Soft amber */
+    --secondary-foreground: 215 25% 17%; /* Dark slate */
 
     --muted: 220 14% 96%;
     --muted-foreground: 215 16% 47%;
@@ -33,18 +33,18 @@
 
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 158 64% 39%;
+    --ring: 142 69% 45%;
 
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 215 25% 27%;
-    --sidebar-primary: 158 64% 39%;
+    --sidebar-primary: 142 69% 45%;
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 220 14% 96%;
     --sidebar-accent-foreground: 215 25% 27%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 158 64% 39%;
+    --sidebar-ring: 142 69% 45%;
   }
 
   .dark {
@@ -57,10 +57,10 @@
     --popover: 215 25% 12%;
     --popover-foreground: 213 31% 91%;
 
-    --primary: 158 64% 39%;
+    --primary: 142 69% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 42 96% 56%;
+    --secondary: 35 96% 50%;
     --secondary-foreground: 215 25% 27%;
 
     --muted: 217 33% 18%;
@@ -74,7 +74,7 @@
 
     --border: 217 33% 18%;
     --input: 217 33% 18%;
-    --ring: 158 64% 39%;
+    --ring: 142 69% 45%;
   }
 }
 
@@ -84,17 +84,17 @@
   }
 
   body {
-    @apply bg-background text-foreground font-lato;
+    @apply bg-background text-foreground font-inter;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-montserrat font-bold;
+    @apply font-poppins font-bold;
   }
 }
 
 /* Hero section styles */
 .hero-section {
-  background-image: linear-gradient(rgba(31, 41, 55, 0.7), rgba(31, 41, 55, 0.7)), url('/src/assets/hero-image.jpg');
+  background-image: linear-gradient(rgba(30, 41, 59, 0.7), rgba(30, 41, 59, 0.7)), url('/src/assets/hero-image.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -108,7 +108,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(251, 191, 36, 0.2));
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(245, 158, 11, 0.2));
   z-index: 1;
   animation: wave 15s ease infinite;
   background-size: 200% 200%;
@@ -125,12 +125,21 @@
 }
 
 .hotel-card:hover {
-  transform: translateY(-5px) scale(1.02);
+  transform: translateY(-5px) scale(1.05);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+.hotel-card .view-details {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.hotel-card:hover .view-details {
+  transform: translateX(3px);
+  color: #22C55E;
+}
+
 .rating-stars {
-  color: #FBBF24;
+  color: #F59E0B;
 }
 
 /* Destination card effects */
@@ -159,11 +168,11 @@
 
 .btn-hover-effect:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
 }
 
 .btn-secondary-hover:hover {
-  box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
 }
 
 /* Form field effects */
@@ -172,8 +181,8 @@
 }
 
 .form-field-focus:focus {
-  border-color: #10B981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+  border-color: #22C55E;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
 }
 
 /* Animation utility classes */
@@ -182,17 +191,6 @@
 .animate-stagger-3 { animation-delay: 300ms; }
 .animate-stagger-4 { animation-delay: 400ms; }
 .animate-stagger-5 { animation-delay: 500ms; }
-
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.animate-on-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 /* Map pin animation */
 .map-pin {
@@ -206,7 +204,7 @@
   left: 50%;
   width: 16px;
   height: 16px;
-  background: rgba(16, 185, 129, 0.6);
+  background: rgba(34, 197, 94, 0.6);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
@@ -214,7 +212,7 @@
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(90deg, #10B981, #FBBF24);
+  background: linear-gradient(90deg, #22C55E, #F59E0B);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -222,12 +220,80 @@
 
 /* Wave background for sections */
 .wave-bg {
-  background: linear-gradient(-45deg, #10B981, #1F2937, #FBBF24, #1F2937);
+  background: linear-gradient(-45deg, #22C55E, #1E293B, #F59E0B, #1E293B);
   background-size: 400% 400%;
   animation: wave 15s ease infinite;
 }
 
-/* Original animations - keeping for compatibility */
+/* Skeleton loading animation */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Animations for leaf and vine patterns */
+.leaf-pattern {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.leaf {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2322C55E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: leaf-sway 6s ease-in-out infinite;
+}
+
+.vine {
+  position: absolute;
+  width: 2px;
+  height: 0;
+  background-color: rgba(34, 197, 94, 0.3);
+  animation: grow-vine 2s ease-out forwards;
+}
+
+/* Wave animation */
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%2322C55E' fill-opacity='0.2' d='M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+  background-size: 100% 100px;
+  background-repeat: no-repeat;
+  animation: wave-motion 3s ease-in-out infinite;
+}
+
+/* Keep existing keyframes and animations */
+@keyframes wave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -261,17 +327,6 @@
   }
 }
 
-@keyframes accordion-down {
-  from {
-    height: 0;
-    opacity: 0;
-  }
-  to {
-    height: var(--radix-accordion-content-height);
-    opacity: 1;
-  }
-}
-
 @keyframes ping {
   75%, 100% {
     transform: scale(2);
@@ -279,7 +334,7 @@
   }
 }
 
-/* Keep existing animations */
+/* Keep existing animation classes */
 .animate-fade-in {
   animation: fade-in 0.5s ease forwards;
 }
@@ -292,11 +347,6 @@
   animation: slide-in-from-right 0.5s ease forwards;
 }
 
-.animate-accordion-down {
-  animation: accordion-down 0.3s ease-out;
-}
-
-/* Keep existing delay classes */
 .delay-100 {
   animation-delay: 100ms;
 }

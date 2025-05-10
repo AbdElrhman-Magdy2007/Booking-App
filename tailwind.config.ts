@@ -20,9 +20,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Lato', 'sans-serif'],
-				montserrat: ['Montserrat', 'sans-serif'],
-				lato: ['Lato', 'sans-serif'],
+				sans: ['Inter', 'sans-serif'],
+				poppins: ['Poppins', 'sans-serif'],
+				inter: ['Inter', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -31,27 +31,27 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: '#10B981', // Emerald green
+					DEFAULT: '#22C55E', // Vibrant green
 					foreground: '#FFFFFF'
 				},
 				secondary: {
-					DEFAULT: '#FBBF24', // Soft gold
-					foreground: '#1F2937' // Charcoal gray
+					DEFAULT: '#F59E0B', // Soft amber
+					foreground: '#1E293B' // Dark slate
 				},
-				emerald: {
-					DEFAULT: '#10B981',
-					light: '#A7F3D0',
-					dark: '#059669'
+				green: {
+					DEFAULT: '#22C55E',
+					light: '#86EFAC',
+					dark: '#16A34A'
 				},
-				gold: {
-					DEFAULT: '#FBBF24',
-					light: '#FDE68A',
+				amber: {
+					DEFAULT: '#F59E0B',
+					light: '#FCD34D',
 					dark: '#D97706'
 				},
-				charcoal: {
-					DEFAULT: '#1F2937',
-					light: '#4B5563',
-					dark: '#111827'
+				slate: {
+					DEFAULT: '#1E293B',
+					light: '#334155',
+					dark: '#0F172A'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -154,21 +154,36 @@ export default {
 				},
 				'pulse-glow': {
 					'0%, 100%': {
-						boxShadow: '0 0 0 0 rgba(16, 185, 129, 0.4)'
+						boxShadow: '0 0 0 0 rgba(34, 197, 94, 0.4)'
 					},
 					'50%': {
-						boxShadow: '0 0 0 10px rgba(16, 185, 129, 0)'
+						boxShadow: '0 0 0 10px rgba(34, 197, 94, 0)'
 					}
 				},
-				'wave': {
-					'0%': {
-						backgroundPosition: '0% 50%'
+				'leaf-sway': {
+					'0%, 100%': {
+						transform: 'rotate(-3deg) scale(1)'
 					},
 					'50%': {
-						backgroundPosition: '100% 50%'
+						transform: 'rotate(3deg) scale(1.05)'
+					}
+				},
+				'grow-vine': {
+					'0%': {
+						height: '0%',
+						opacity: '0.3'
 					},
 					'100%': {
-						backgroundPosition: '0% 50%'
+						height: '100%',
+						opacity: '1'
+					}
+				},
+				'wave-motion': {
+					'0%, 100%': {
+						transform: 'translateY(0)'
+					},
+					'50%': {
+						transform: 'translateY(-10px)'
 					}
 				}
 			},
@@ -181,7 +196,9 @@ export default {
 				'ping': 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite',
 				'scale-in': 'scale-in 0.3s ease-out forwards',
 				'pulse-glow': 'pulse-glow 2s infinite',
-				'wave': 'wave 15s ease infinite'
+				'leaf-sway': 'leaf-sway 6s ease-in-out infinite',
+				'grow-vine': 'grow-vine 2s ease-out forwards',
+				'wave-motion': 'wave-motion 3s ease-in-out infinite'
 			}
 		}
 	},
