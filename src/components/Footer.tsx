@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram } from 'lucide-react';
+import { Facebook, Instagram, Twitter } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -25,6 +25,15 @@ const Footer = () => {
                 aria-label="Instagram"
               >
                 <Instagram size={20} />
+              </a>
+              <a 
+                href="https://twitter.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white hover:text-secondary transition-colors"
+                aria-label="Twitter"
+              >
+                <Twitter size={20} />
               </a>
               <a 
                 href="https://facebook.com" 
@@ -70,7 +79,7 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/faq" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/contact#faqs" className="text-gray-300 hover:text-white transition-colors">
                   FAQ
                 </Link>
               </li>
@@ -85,7 +94,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/cancellation" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/contact" className="text-gray-300 hover:text-white transition-colors">
                   Cancellation Policy
                 </Link>
               </li>
