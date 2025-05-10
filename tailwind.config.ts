@@ -20,9 +20,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter', 'sans-serif'],
-				poppins: ['Poppins', 'sans-serif'],
-				'open-sans': ['Open Sans', 'sans-serif'],
+				sans: ['Lato', 'sans-serif'],
+				montserrat: ['Montserrat', 'sans-serif'],
+				lato: ['Lato', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -31,27 +31,27 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: '#1E3A8A',
+					DEFAULT: '#10B981', // Emerald green
 					foreground: '#FFFFFF'
 				},
 				secondary: {
-					DEFAULT: '#3B82F6',
-					foreground: '#FFFFFF'
+					DEFAULT: '#FBBF24', // Soft gold
+					foreground: '#1F2937' // Charcoal gray
 				},
-				teal: {
-					DEFAULT: '#2DD4BF',
+				emerald: {
+					DEFAULT: '#10B981',
 					light: '#A7F3D0',
-					dark: '#0F766E'
+					dark: '#059669'
 				},
-				coral: {
-					DEFAULT: '#F472B6',
-					light: '#FBCFE8',
-					dark: '#BE185D'
+				gold: {
+					DEFAULT: '#FBBF24',
+					light: '#FDE68A',
+					dark: '#D97706'
 				},
-				navy: {
-					DEFAULT: '#1E3A8A',
-					light: '#BFDBFE',
-					dark: '#1E3A8A'
+				charcoal: {
+					DEFAULT: '#1F2937',
+					light: '#4B5563',
+					dark: '#111827'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -141,6 +141,35 @@ export default {
 						transform: 'scale(2)',
 						opacity: '0'
 					}
+				},
+				'scale-in': {
+					'0%': {
+						transform: 'scale(0.95)',
+						opacity: '0'
+					},
+					'100%': {
+						transform: 'scale(1)',
+						opacity: '1'
+					}
+				},
+				'pulse-glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 0 0 rgba(16, 185, 129, 0.4)'
+					},
+					'50%': {
+						boxShadow: '0 0 0 10px rgba(16, 185, 129, 0)'
+					}
+				},
+				'wave': {
+					'0%': {
+						backgroundPosition: '0% 50%'
+					},
+					'50%': {
+						backgroundPosition: '100% 50%'
+					},
+					'100%': {
+						backgroundPosition: '0% 50%'
+					}
 				}
 			},
 			animation: {
@@ -149,7 +178,10 @@ export default {
 				'fade-in': 'fade-in 0.5s ease forwards',
 				'slide-in-from-left': 'slide-in-from-left 0.5s ease forwards',
 				'slide-in-from-right': 'slide-in-from-right 0.5s ease forwards',
-				'ping': 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite'
+				'ping': 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite',
+				'scale-in': 'scale-in 0.3s ease-out forwards',
+				'pulse-glow': 'pulse-glow 2s infinite',
+				'wave': 'wave 15s ease infinite'
 			}
 		}
 	},
