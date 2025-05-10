@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Star, MapPin, Wifi, Pool, Parking } from 'lucide-react';
+import { Star, MapPin, Wifi, Bath, Car } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 export interface HotelProps {
@@ -46,9 +46,9 @@ const HotelCard: React.FC<HotelProps> = ({
       case 'wifi':
         return <Wifi size={16} />;
       case 'pool':
-        return <Pool size={16} />;
+        return <Bath size={16} />; // Using Bath icon instead of Pool
       case 'parking':
-        return <Parking size={16} />;
+        return <Car size={16} />; // Using Car icon instead of Parking
       default:
         return null;
     }

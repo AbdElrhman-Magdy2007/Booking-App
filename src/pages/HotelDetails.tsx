@@ -26,7 +26,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Star, MapPin, Wifi, Pool, Parking, Check, Calendar as CalendarIcon, Users } from 'lucide-react';
+import { Star, MapPin, Wifi, Bath, Car, Check, Calendar as CalendarIcon, Users } from 'lucide-react';
 import { toast } from '@/components/ui/sonner';
 
 // Sample hotel data
