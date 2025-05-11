@@ -4,6 +4,18 @@ Welcome to a modern, elegant, and high-performance **Hotel Booking Platform** �
 
 ---
 
+## 🔗 Live Demo
+
+👉 [Visit the Live Site on Vercel](https://booking-app-silk-one.vercel.app/)
+
+---
+
+## 🛠️ GitHub Repository
+
+📂 [Explore the Code on GitHub](https://github.com/AbdElrhman-Magdy2007/Booking-App)
+
+---
+
 ## 🚀 Why This Platform?
 
 - 🔍 **Smart & Fast Hotel Search** based on location, date, and number of guests.
@@ -35,6 +47,8 @@ Welcome to a modern, elegant, and high-performance **Hotel Booking Platform** �
 
 ## 📁 Project Structure
 
+
+
 src/
 │
 ├── components/
@@ -52,6 +66,8 @@ src/
 │
 └── ...
 
+
+---
 
 ---
 
@@ -86,4 +102,18 @@ The platform is built with scalability in mind — you can easily add:
 
 ---
 
+## 💡 The Vision
 
+> Not just a booking site — a **seamless hotel discovery experience** that’s fast, elegant, and built for real users.
+
+---
+
+## 🧪 Getting Started (Optional)
+
+Want to run it locally?
+
+```bash
+git clone https://github.com/AbdElrhman-Magdy2007/Booking-App.git
+cd Booking-App
+npm install
+npm run dev
