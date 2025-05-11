@@ -71,7 +71,7 @@ const Contact = () => {
     },
     {
       question: "How do I contact customer support?",
-      answer: "You can reach our customer support team through this contact form, by emailing support@stayhub.com, or by calling our 24/7 hotline at +971-50-123-4567. We're always ready to assist you with any questions or concerns."
+      answer: "You can reach our customer support team through this contact form, by emailing support@gmail.com, or by calling our 24/7 hotline at +971-50-123-4567. We're always ready to assist you with any questions or concerns."
     }
   ];
 
@@ -140,7 +140,7 @@ const Contact = () => {
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="your.email@example.com"
+                      placeholder="your@gmail.com"
                       className="border-[#2DD4BF] focus:ring-2 focus:ring-[#2DD4BF] transition-all duration-300"
                       required
                     />
@@ -195,9 +195,9 @@ const Contact = () => {
                       <Mail className="text-[#F472B6] mt-1" />
                       <div>
                         <h3 className="text-lg font-semibold mb-1 font-poppins">Email Us</h3>
-                        <p className="text-gray-600 mb-2 font-open-sans">For inquiries and support:</p>
-                        <a href="mailto:support@stayhub.com" className="text-[#2DD4BF] hover:text-[#2DD4BF]/80 transition-colors font-open-sans">
-                          support@stayhub.com
+                        <p className="text-gray-600 mb-2 font-open-sans">For inquiries and uesr:</p>
+                        <a href="mailto:uesr@gmail.com" className="text-[#2DD4BF] hover:text-[#2DD4BF]/80 transition-colors font-open-sans">
+                          uesr@gmail.com
                         </a>
                       </div>
                     </div>
@@ -209,8 +209,8 @@ const Contact = () => {
                       <div>
                         <h3 className="text-lg font-semibold mb-1 font-poppins">Call Us</h3>
                         <p className="text-gray-600 mb-2 font-open-sans">24/7 customer support:</p>
-                        <a href="tel:+97150123456" className="text-[#2DD4BF] hover:text-[#2DD4BF]/80 transition-colors font-open-sans">
-                          +971-50-123-4567
+                        <a href="tel:+111-11-111-111" className="text-[#2DD4BF] hover:text-[#2DD4BF]/80 transition-colors font-open-sans">
+                          +111-11-111-111
                         </a>
                       </div>
                     </div>
@@ -222,7 +222,7 @@ const Contact = () => {
                       <div>
                         <h3 className="text-lg font-semibold mb-1 font-poppins">Visit Us</h3>
                         <p className="text-gray-600 font-open-sans">
-                          StayHub Headquarters<br />
+                          gmail Headquarters<br />
                           456 Ocean Road<br />
                           Dubai, UAE
                         </p>
