@@ -58,7 +58,7 @@ const Hero = () => {
       variants={containerVariants}
       style={{ opacity, scale, y }}
     >
-      <div className="w-full h-[650px] flex items-center justify-center relative">
+      <div className="w-full h-[515px] flex items-center justify-center relative">
         {/* Background Image with Parallax */}
         <motion.div 
           className="absolute inset-0 w-full h-full"
