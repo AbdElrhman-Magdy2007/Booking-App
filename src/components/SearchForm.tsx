@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -70,7 +69,7 @@ const SearchForm = () => {
           <Input 
             type="text"
             placeholder="Where are you going?"
-            className="pl-10 border-2 border-gray-200 focus:border-primary form-field-focus"
+            className="pl-10 border-2 border-gray-200 focus:border-green-600 focus:ring-2 focus:ring-green-600/20 transition-colors bg-green-50"
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
           />
@@ -89,9 +88,9 @@ const SearchForm = () => {
           <PopoverTrigger asChild>
             <Button 
               variant="outline" 
-              className="w-full justify-start text-left font-normal border-2 border-gray-200 form-field-focus hover:bg-white"
+              className="w-full justify-start text-left font-normal border-2 border-gray-200 focus:border-green-600 focus:ring-2 focus:ring-green-600/20 hover:bg-green-50 transition-colors bg-green-50"
             >
-              <Calendar className="mr-2 h-4 w-4 text-primary" />
+              <Calendar className="mr-2 h-4 w-4 text-green-600" />
               {checkIn ? (
                 format(checkIn, "PPP")
               ) : (
@@ -124,9 +123,9 @@ const SearchForm = () => {
           <PopoverTrigger asChild>
             <Button 
               variant="outline" 
-              className="w-full justify-start text-left font-normal border-2 border-gray-200 form-field-focus hover:bg-white"
+              className="w-full justify-start text-left font-normal border-2 border-gray-200 focus:border-green-600 focus:ring-2 focus:ring-green-600/20 hover:bg-green-50 transition-colors bg-green-50"
             >
-              <Calendar className="mr-2 h-4 w-4 text-primary" />
+              <Calendar className="mr-2 h-4 w-4 text-green-600" />
               {checkOut ? (
                 format(checkOut, "PPP")
               ) : (
@@ -157,9 +156,9 @@ const SearchForm = () => {
       >
         <div className="flex items-center">
           <Select value={guests} onValueChange={setGuests}>
-            <SelectTrigger className="w-full border-2 border-gray-200 form-field-focus">
+            <SelectTrigger className="w-full border-2 border-gray-200 focus:border-green-600 focus:ring-2 focus:ring-green-600/20 transition-colors bg-green-50">
               <div className="flex items-center">
-                <Users className="mr-2 h-4 w-4 text-primary" />
+                <Users className="mr-2 h-4 w-4 text-green-600" />
                 <SelectValue placeholder="Guests" />
               </div>
             </SelectTrigger>
@@ -185,7 +184,7 @@ const SearchForm = () => {
       >
         <Button 
           type="submit" 
-          className="bg-secondary text-slate hover:bg-secondary/90 h-10 px-8 font-poppins font-medium shadow-lg btn-hover-effect btn-secondary-hover"
+          className="bg-green-600 text-white hover:bg-green-700 h-10 px-8 font-poppins font-medium shadow-lg transition-colors"
         >
           <Search className="mr-2 h-4 w-4" />
           Search

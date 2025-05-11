@@ -1,6 +1,6 @@
-
 import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
@@ -62,286 +62,487 @@ const specialOffers = [
   }
 ];
 
+// مكون لبطاقة العرض الخاص
+const OfferCard = ({ offer, index }) => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({ threshold: 0.3, triggerOnce: true });
+
+  useEffect(() => {
+    if (inView) controls.start('visible');
+  }, [controls, inView]);
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.6, ease: 'easeOut', delay: index * 0.15 }
+    }
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      variants={cardVariants}
+      initial="hidden"
+      animate={controls}
+      className="flex flex-col md:flex-row bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-500"
+      whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
+    >
+      <div className="md:w-2/5 h-64 md:h-auto overflow-hidden relative">
+        <motion.img
+          src={offer.image}
+          alt={offer.title}
+          className="w-full h-full object-cover"
+          initial={{ scale: 1.1 }}
+          whileHover={{ scale: 1.15 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+      </div>
+      <div className="md:w-3/5 p-6 flex flex-col justify-between">
+        <div>
+          <h3 className="text-xl font-bold mb-2 text-slate font-poppins">{offer.title}</h3>
+          <p className="text-gray-600 mb-4 font-inter">{offer.description}</p>
+        </div>
+        <Link to={offer.link}>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button className="bg-secondary text-slate hover:bg-secondary/80 rounded-full px-6 py-2 font-poppins">
+              View Offer <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </motion.div>
+        </Link>
+      </div>
+    </motion.div>
+  );
+};
+
+// مكون لبطاقة التقييم
+const ReviewCard = ({ index, name, location }) => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({ threshold: 0.3, triggerOnce: true });
+
+  useEffect(() => {
+    if (inView) controls.start('visible');
+  }, [controls, inView]);
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.6, ease: 'easeOut', delay: index * 0.15 }
+    }
+  };
+
+  const starVariants = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.3, type: 'spring', stiffness: 200 }
+    }
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      variants={cardVariants}
+      initial="hidden"
+      animate={controls}
+      className="bg-white rounded-xl shadow-md p-6 h-full hover:shadow-2xl transition-all duration-500"
+      whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
+    >
+      <motion.div
+        className="flex items-center mb-4"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+        }}
+      >
+        {Array(5).fill(0).map((_, i) => (
+          <motion.span key={i} variants={starVariants}>
+            <Star className="w-5 h-5 text-secondary fill-secondary" />
+          </motion.span>
+        ))}
+      </motion.div>
+      <p className="text-gray-600 mb-6 font-inter italic">
+        "The hotel exceeded all our expectations. From the moment we arrived, the staff was incredibly attentive and made our stay memorable."
+      </p>
+      <div className="flex items-center">
+        <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden mr-4">
+          <img
+            src={`https://i.postimg.cc/R0PVztfT/3cae079ca0b9e55ec6bfc1b358c9b1e2-1.jpg`}
+            alt={name}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+        <div>
+          <p className="font-bold text-slate font-poppins">{name}</p>
+          <div className="flex items-center text-sm text-gray-500">
+            <MapPin size={14} className="mr-1" />
+            <span className="font-inter">{location}</span>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const Index = () => {
   // Page animation variants
   const pageVariants = {
-    initial: { opacity: 0 },
-    animate: { 
+    initial: { opacity: 0, y: 30 },
+    animate: {
       opacity: 1,
-      transition: { 
-        duration: 0.5,
-        when: "beforeChildren",
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: 'easeOut',
+        when: 'beforeChildren',
+        staggerChildren: 0.1
       }
     },
-    exit: { 
+    exit: {
       opacity: 0,
-      transition: { duration: 0.3 }
+      y: -30,
+      transition: { duration: 0.4, ease: 'easeIn' }
+    }
+  };
+
+  // Section animation variants
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: 'easeOut', staggerChildren: 0.2 }
     }
   };
 
   // Scroll to top on page load
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   return (
-    <motion.div 
-      className="min-h-screen flex flex-col"
+    <motion.div
+      className="min-h-screen flex flex-col bg-gray-50"
       variants={pageVariants}
       initial="initial"
       animate="animate"
       exit="exit"
     >
       <Header />
-      
+
       <main className="flex-grow">
-        {/* Hero Section with Search */}
-        <Hero />
-        
+        {/* Hero Section */}
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible">
+          <Hero />
+        </motion.section>
+
         {/* Popular Destinations */}
-        <PopularDestinations />
-        
-        {/* Special Offers */}
-        <section className="py-16 bg-gray-50 relative overflow-hidden">
-          {/* Background vine patterns */}
-          <div className="absolute inset-0 pointer-events-none">
-            {Array(5).fill(0).map((_, i) => (
-              <div
-                key={i}
-                className="vine absolute"
-                style={{ 
-                  top: `${Math.random() * 80}%`,
-                  left: `${Math.random() * 90 + 5}%`,
-                  height: `${Math.random() * 30 + 20}%`,
-                  animationDelay: `${i * 0.3}s`,
-                  transform: `rotate(${Math.random() * 40 - 20}deg)`
-                }}
-              />
-            ))}
-          </div>
-          
-          <div className="container mx-auto px-4">
-            <ScrollReveal>
-              <h2 className="text-3xl font-bold text-center mb-2 font-poppins text-slate">
-                Exclusive <span className="text-primary">Offers</span>
-              </h2>
-            </ScrollReveal>
-            
-            <ScrollReveal delay={0.1}>
-              <p className="text-gray-600 text-center mb-12 font-inter">
-                Limited-time deals for your next adventure
-              </p>
-            </ScrollReveal>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {specialOffers.map((offer, index) => (
-                <ScrollReveal 
-                  key={offer.id} 
-                  direction={index % 2 === 0 ? "left" : "right"}
-                  delay={index * 0.2}
-                  className="w-full"
-                >
-                  <motion.div 
-                    className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full"
-                    whileHover={{ y: -5, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}
-                  >
-                    <div className="md:w-2/5 h-64 md:h-auto overflow-hidden">
-                      <motion.img 
-                        src={offer.image} 
-                        alt={offer.title} 
-                        className="w-full h-full object-cover"
-                        initial={{ scale: 1 }}
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.5 }}
-                      />
-                    </div>
-                    <div className="md:w-3/5 p-6 flex flex-col justify-between">
-                      <div>
-                        <h3 className="text-2xl font-bold mb-2 text-slate font-poppins">{offer.title}</h3>
-                        <p className="text-gray-600 mb-4 font-inter">{offer.description}</p>
-                      </div>
-                      <Link to={offer.link}>
-                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                          <Button className="bg-secondary text-slate hover:bg-secondary/90 mt-4 btn-hover-effect btn-secondary-hover">
-                            View Offer <ArrowRight className="ml-2 h-4 w-4" />
-                          </Button>
-                        </motion.div>
-                      </Link>
-                    </div>
-                  </motion.div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-        
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible">
+          <PopularDestinations />
+        </motion.section>
+
         {/* Featured Hotels */}
-        <section className="py-16 bg-white">
+        <motion.section
+          className="py-16 bg-white"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <div className="container mx-auto px-4">
             <ScrollReveal>
-              <h2 className="text-3xl font-bold text-center mb-2 font-poppins text-slate">
+              <motion.h2
+                className="text-4xl font-bold text-center mb-3 font-poppins text-slate"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
                 Featured <span className="text-primary">Hotels</span>
-              </h2>
+              </motion.h2>
             </ScrollReveal>
-            
             <ScrollReveal delay={0.1}>
-              <p className="text-gray-600 text-center mb-12 font-inter">
+              <motion.p
+                className="text-gray-600 text-center mb-12 font-inter"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+              >
                 Handpicked accommodations for your perfect stay
-              </p>
+              </motion.p>
             </ScrollReveal>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              variants={sectionVariants}
+            >
               {featuredHotels.map((hotel, index) => (
-                <ScrollReveal key={hotel.id} delay={index * 0.2} className="w-full">
-                  <HotelCard key={hotel.id} {...hotel} />
-                </ScrollReveal>
+                <motion.div
+                  key={hotel.id}
+                  variants={{
+                    hidden: { opacity: 0, y: 50, scale: 0.95 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      transition: { duration: 0.6, ease: 'easeOut', delay: index * 0.15 }
+                    }
+                  }}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
+                >
+                  <HotelCard {...hotel} />
+                </motion.div>
               ))}
-            </div>
-            
+            </motion.div>
             <ScrollReveal delay={0.3} className="flex justify-center mt-12 w-full">
               <Link to="/search">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button className="bg-primary hover:bg-primary/90 px-8 shadow-md btn-hover-effect font-poppins">
+                  <Button className="bg-primary hover:bg-primary/90 rounded-full px-8 py-3 shadow-md font-poppins">
                     Explore All Hotels <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </motion.div>
               </Link>
             </ScrollReveal>
           </div>
-        </section>
-        
-        {/* Testimonials */}
-        <section className="py-16 bg-gray-50">
+        </motion.section>
+
+        {/* Special Offers */}
+        <motion.section
+          className="py-16 bg-gray-50"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <div className="container mx-auto px-4">
             <ScrollReveal>
-              <h2 className="text-3xl font-bold text-center mb-2 font-poppins text-slate">
-                Guest <span className="text-primary">Reviews</span>
-              </h2>
+              <motion.h2
+                className="text-4xl font-bold text-center mb-3 font-poppins text-slate"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                Exclusive <span className="text-primary">Offers</span>
+              </motion.h2>
             </ScrollReveal>
-            
             <ScrollReveal delay={0.1}>
-              <p className="text-gray-600 text-center mb-12 font-inter">
-                Authentic experiences from our satisfied travelers
-              </p>
+              <motion.p
+                className="text-gray-600 text-center mb-12 font-inter"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+              >
+                Limited-time deals for your next adventure
+              </motion.p>
             </ScrollReveal>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[1, 2, 3].map((index) => (
-                <ScrollReveal key={index} delay={index * 0.2} className="w-full">
-                  <motion.div 
-                    className="bg-white rounded-lg shadow-lg p-6 h-full"
-                    whileHover={{ y: -5, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <motion.div 
-                      className="flex items-center mb-4"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.5, staggerChildren: 0.1 }}
-                    >
-                      {Array(5).fill(0).map((_, i) => (
-                        <motion.span
-                          key={i}
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: i * 0.1 }}
-                        >
-                          <Star key={i} className="w-5 h-5 text-secondary fill-secondary" />
-                        </motion.span>
-                      ))}
-                    </motion.div>
-                    <p className="text-gray-600 mb-6 font-inter italic">
-                      "The hotel exceeded all our expectations. From the moment we arrived, the staff was incredibly attentive and made our stay memorable. The amenities were top-notch and the location was perfect for exploring the city."
-                    </p>
-                    <div className="flex items-center">
-                      <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden mr-4">
-                        <img 
-                          src={`https://randomuser.me/api/portraits/${index % 2 === 0 ? 'men' : 'women'}/${index + 50}.jpg`} 
-                          alt="Guest" 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <p className="font-bold text-slate font-poppins">
-                          {index === 0 ? 'Michael Johnson' : index === 1 ? 'Sarah Wilson' : 'David Thompson'}
-                        </p>
-                        <div className="flex items-center text-sm text-gray-500">
-                          <MapPin size={14} className="mr-1" />
-                          <span className="font-inter">
-                            {index === 0 ? 'New York, USA' : index === 1 ? 'London, UK' : 'Sydney, Australia'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </ScrollReveal>
+            <motion.div
+              className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+              variants={sectionVariants}
+            >
+              {specialOffers.map((offer, index) => (
+                <OfferCard key={offer.id} offer={offer} index={index} />
               ))}
-            </div>
+            </motion.div>
           </div>
-        </section>
-        
-        {/* Download App CTA */}
-        <section className="py-16 bg-slate text-white wave-bg relative overflow-hidden">
-          {/* Animated wave */}
-          <div className="wave absolute bottom-0 left-0 w-full h-24"></div>
-          
+        </motion.section>
+
+        {/* Testimonials */}
+        <motion.section
+          className="py-16 bg-white"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row items-center justify-between">
-              <ScrollReveal direction="left" className="md:w-1/2 mb-8 md:mb-0">
-                <h2 className="text-3xl font-bold mb-4 font-poppins">Get Our Mobile App</h2>
-                <p className="text-white/80 mb-6 font-inter">
-                  Book on the go, receive exclusive app-only deals, and manage your trips with ease using our mobile application.
-                </p>
+            <ScrollReveal>
+              <motion.h2
+                className="text-4xl font-bold text-center mb-3 font-poppins text-slate"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                Guest <span className="text-primary">Reviews</span>
+              </motion.h2>
+            </ScrollReveal>
+            <ScrollReveal delay={0.1}>
+              <motion.p
+                className="text-gray-600 text-center mb-12 font-inter"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                viewport={{ once: true }}
+              >
+                Authentic experiences from our satisfied travelers
+              </motion.p>
+            </ScrollReveal>
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+              variants={sectionVariants}
+            >
+              {[
+                { name: 'Michael Johnson', location: 'New York, USA' },
+                { name: 'Sarah Wilson', location: 'London, UK' },
+                { name: 'David Thompson', location: 'Sydney, Australia' }
+              ].map((review, index) => (
+                <ReviewCard
+                  key={index}
+                  index={index}
+                  name={review.name}
+                  location={review.location}
+                />
+              ))}
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* Download App CTA */}
+        <motion.section
+          className="py-16 bg-gradient-to-br from-slate to-primary text-white relative overflow-hidden"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <div className="container mx-auto px-4">
+            <motion.div
+              className="flex flex-col md:flex-row items-center justify-between"
+              variants={sectionVariants}
+            >
+              <motion.div
+                className="md:w-1/2 mb-8 md:mb-0"
+                variants={{
+                  hidden: { opacity: 0, x: -50 },
+                  visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+                }}
+              >
+                <motion.h2
+                  className="text-4xl font-bold mb-4 font-poppins"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                >
+                  Get Our Mobile App
+                </motion.h2>
+                <motion.p
+                  className="text-white/80 mb-6 font-inter"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  Book on the go, receive exclusive app-only deals, and manage your trips with ease.
+                </motion.p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button variant="outline" className="border-white text-white hover:bg-white hover:text-slate btn-hover-effect">
+                    <Button
+                      variant="outline"
+                      className="border-white text-primary hover:bg-white hover:text-slate rounded-full px-6 py-2"
+                      aria-label="Download from App Store"
+                    >
                       <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M8 14L12 10L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path
+                          d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2Z"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M8 14L12 10L16 14"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                       App Store
                     </Button>
                   </motion.div>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button variant="outline" className="border-white text-white hover:bg-white hover:text-slate btn-hover-effect">
+                    <Button
+                      variant="outline"
+                      className="border-white text-primary hover:bg-white hover:text-slate rounded-full px-6 py-2"
+                      aria-label="Download from Google Play"
+                    >
                       <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2L2 12L12 22L22 12L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path
+                          d="M12 2L2 12L12 22L22 12L12 2Z"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                       Google Play
                     </Button>
                   </motion.div>
                 </div>
-              </ScrollReveal>
-              <ScrollReveal direction="right" className="md:w-2/5">
-                <motion.div 
-                  className="bg-white/10 p-6 rounded-lg backdrop-blur-sm"
+              </motion.div>
+              <motion.div
+                className="md:w-2/5"
+                variants={{
+                  hidden: { opacity: 0, x: 50 },
+                  visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+                }}
+              >
+                <motion.div
+                  className="relative"
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <div className="aspect-[9/16] rounded-lg bg-white/5 flex items-center justify-center overflow-hidden relative">
-                    <motion.img 
-                      src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
-                      alt="App Screenshot" 
-                      className="h-full w-full object-cover rounded-lg opacity-90"
+                  <motion.div
+                    className="aspect-[9/16] rounded-2xl overflow-hidden relative"
+                    initial={{ y: 0 }}
+                    whileInView={{ y: [-10, 10] }}
+                    transition={{ repeat: Infinity, repeatType: 'reverse', duration: 3 }}
+                  >
+                    <motion.img
+                      src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+                      alt="App Screenshot"
+                      className="h-full w-full object-cover rounded-2xl"
                       initial={{ scale: 1 }}
-                      whileHover={{ scale: 1.03 }}
+                      whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.5 }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate/50"></div>
-                    <div className="absolute bottom-4 left-4 right-4 bg-white/90 p-3 rounded-lg backdrop-blur-sm shadow-lg">
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate/40 rounded-2xl" />
+                    <motion.div
+                      className="absolute bottom-4 left-4 right-4 bg-white/90 p-3 rounded-lg shadow-lg"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      viewport={{ once: true }}
+                    >
                       <div className="text-slate text-sm font-poppins">
                         <div className="font-bold mb-1">Booking confirmed!</div>
                         <div className="text-xs text-gray-600">Grand Luxury Resort & Spa - July 15-18</div>
                       </div>
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
                 </motion.div>
-              </ScrollReveal>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
       </main>
-      
+
       <Footer />
     </motion.div>
   );
