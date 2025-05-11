@@ -2,17 +2,8 @@
 
 Welcome to a modern, elegant, and high-performance **Hotel Booking Platform** — built with a focus on user experience, speed, and visual appeal.
 
----
-
-## 🔗 Live Demo
-
-👉 [Visit the Live Site on Vercel](https://booking-app-lfdt.vercel.app/)
-
----
-
-## 🛠️ GitHub Repository
-
-📂 [Explore the Code on GitHub](https://github.com/AbdElrhman-Magdy2007/Booking-App)
+🔗 **Live Demo**: [booking-app-lfdt.vercel.app](https://booking-app-lfdt.vercel.app/)  
+📁 **Source Code**: [GitHub Repository](https://github.com/AbdElrhman-Magdy2007/Booking-App)
 
 ---
 
@@ -49,6 +40,8 @@ Welcome to a modern, elegant, and high-performance **Hotel Booking Platform** �
 
 
 
+
+
 src/
 │
 ├── components/
@@ -67,7 +60,6 @@ src/
 └── ...
 
 
----
 
 ---
 
@@ -108,12 +100,5 @@ The platform is built with scalability in mind — you can easily add:
 
 ---
 
-## 🧪 Getting Started (Optional)
-
-Want to run it locally?
-
-```bash
-git clone https://github.com/AbdElrhman-Magdy2007/Booking-App.git
-cd Booking-App
-npm install
-npm run dev
+🔗 **Live Preview**: [https://booking-app-lfdt.vercel.app/](https://booking-app-lfdt.vercel.app/)  
+📁 **GitHub Repository**: [https://github.com/AbdElrhman-Magdy2007/Booking-App](https://github.com/AbdElrhman-Magdy2007/Booking-App)
